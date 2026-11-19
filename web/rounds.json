@@ -1,0 +1,92 @@
+[
+  {
+    "roundId": 1,
+    "question": "The numbers 1 to 100 are written on a board. First every multiple of 3 is erased, then every multiple of 5 that remains is erased, then every multiple of 7 that remains is erased. How many numbers are left on the board?",
+    "hint": "Count the numbers that are not divisible by 3, 5, or 7.",
+    "startTime": 1795075200,
+    "endTime": 1795118400,
+    "answerHash": "0x4a2cc91ee622da3bc833a54c37ffcb6f3ec23b7793efc5eaf5e71b7b406c5c06",
+    "placeholder": false
+  },
+  {
+    "roundId": 2,
+    "question": "What is the next number in this sequence? 2, 3, 5, 9, 17, 33, ?",
+    "hint": "Each term is built from the one before it, using the same rule every time.",
+    "startTime": 1795118400,
+    "endTime": 1795161600,
+    "answerHash": "0x7c9785e8241615bc80415d89775984a1337d15dc1bf4ce50f41988b2a2b336a7",
+    "placeholder": false
+  },
+  {
+    "roundId": 3,
+    "question": "How many squares of all sizes are there on a 4 by 4 board?",
+    "hint": "Count the 1 by 1 squares, then the 2 by 2 squares, then the 3 by 3 squares, then the 4 by 4 square.",
+    "startTime": 1795161600,
+    "endTime": 1795204800,
+    "answerHash": "0x50bb669a95c7b50b7e8a6f09454034b2b14cf2b85c730dca9a539ca82cb6e350",
+    "placeholder": false
+  },
+  {
+    "roundId": 4,
+    "question": "A clock chimes once at 1 o'clock, twice at 2 o'clock, three times at 3 o'clock, and so on up to twelve times at 12 o'clock. How many chimes does it make in one full 12-hour cycle?",
+    "hint": "Add up 1 + 2 + 3 and keep going to 12.",
+    "startTime": 1795204800,
+    "endTime": 1795248000,
+    "answerHash": "0x9b65e484ce3d961a557081a44c6c68a0a27eca0b88fce820bdd99c3dc223dcc7",
+    "placeholder": false
+  },
+  {
+    "roundId": 5,
+    "question": "A triangle has all three of its medians drawn \u2014 a line from each corner to the middle of the opposite side. How many triangles of all sizes are in the figure?",
+    "hint": "Count the smallest triangles first, then the ones made of two, then three, then the whole.",
+    "startTime": 1795248000,
+    "endTime": 1795291200,
+    "answerHash": "0x1b6847dc741a1b0cd08d278845f9d819d87b734759afb55fe2de5cb82a9ae672",
+    "placeholder": false
+  },
+  {
+    "roundId": 6,
+    "question": "What is the smallest positive number that is divisible by every whole number from 1 to 10?",
+    "hint": "It must be divisible by 8, 9, 5 and 7.",
+    "startTime": 1795291200,
+    "endTime": 1795334400,
+    "answerHash": "0x491b60e5a383b4ec98ee38038e09b62495d2125e4f73b974cf2612078e198ef9",
+    "placeholder": false
+  },
+  {
+    "roundId": 7,
+    "question": "A snail climbs a 10-metre wall. Each day it climbs 3 metres up, then slips 2 metres back down overnight. How many days does it take to reach the top?",
+    "hint": "The snail gains one metre a day \u2014 but watch the last day.",
+    "startTime": 1795334400,
+    "endTime": 1795377600,
+    "answerHash": "0xf3f7a9fe364faab93b216da50a3214154f22a0a2b415b23a84c8169e8b636ee3",
+    "placeholder": false
+  },
+  {
+    "roundId": 8,
+    "question": "Think of a number. Double it, add 10, halve the result, then subtract the number you first thought of. What do you get?",
+    "hint": "Try it with any starting number; the starting number cancels out.",
+    "startTime": 1795377600,
+    "endTime": 1795420800,
+    "answerHash": "0x036b6384b5eca791c62761152d0c79bb0604c104a5fb6f4eb0703f3154bb3db0",
+    "placeholder": false
+  },
+  {
+    "roundId": 9,
+    "question": "Write out the numbers from one to ten in words \u2014 one, two, three, and so on up to ten \u2014 and add up all the letters. What is the total?",
+    "hint": "Spell each number out in English and count the letters.",
+    "startTime": 1795420800,
+    "endTime": 1795464000,
+    "answerHash": "0x98a476f1687bc3d60a2da2adbcba2c46958e61fa2fb4042cd7bc5816a710195b",
+    "placeholder": false
+  },
+  {
+    "roundId": 10,
+    "question": "What is the sum of the first twenty positive whole numbers, from 1 to 20?",
+    "hint": "Pair the first and last numbers: 1 + 20, 2 + 19, and so on.",
+    "startTime": 1795464000,
+    "endTime": 1795507200,
+    "answerHash": "0xf2192e1030363415d7b4fb0406540a0060e8e2fc8982f3f32289379e11fa6546",
+    "placeholder": false
+  }
+]

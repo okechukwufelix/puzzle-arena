@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puzzle Arena — Twice-daily puzzles for Agent ID holders</title>
+<meta name="description" content="Puzzle Arena: two puzzles a day for Agent ID holders. Free to play — you only pay network gas. Solve the round and mint a free Solve NFT collectible.">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.17.0/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#top">🧩 Puzzle Arena</a>
+    <nav class="nav">
+      <a href="#round">Current Round</a>
+      <a href="#how">How it works</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#past">Past Rounds</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <button id="connectBtn" class="btn btn-primary" type="button">Connect wallet</button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Two puzzles a day for Agent ID holders</p>
+      <h1>Two puzzles a day.<br>One entry per Agent&nbsp;ID.</h1>
+      <p class="lede">A new riddle opens every 12 hours. Only Agent ID holders can play, and each
+      Agent ID gets one entry per round. Solve it and mint a free Solve NFT.</p>
+      <p class="free-line"><strong>Free to play — you only pay network gas.</strong></p>
+      <p class="collectible-line">The Solve NFT is a collectible with no monetary value.
+      No prizes or returns are promised.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#round">Play the current round</a>
+        <a class="btn btn-ghost" href="#how">How it works</a>
+      </div>
+      <p id="deployBanner" class="banner" hidden>The Puzzle Arena contract is not deployed yet.
+      Rounds and the leaderboard below are previews — solving opens once the contract is live on BNB Smart Chain.</p>
+      <p id="walletStatus" class="status" role="status">Not connected. You can browse rounds and the leaderboard without a wallet.</p>
+    </div>
+  </section>
+
+  <!-- Current round -->
+  <section id="round" class="section">
+    <div class="wrap">
+      <h2>Current Round</h2>
+      <div id="roundCard" class="card">
+        <p class="muted">Loading rounds…</p>
+      </div>
+
+      <div id="playBox" class="card" hidden>
+        <h3>Your entry</h3>
+        <ol class="steps">
+          <li><strong>Connect your wallet</strong> (Binance Wallet or MetaMask) using the button above.</li>
+          <li><strong>Type your own Agent ID handle</strong> once. It is stored only in this browser
+            (<code>localStorage</code>) and is never sent anywhere except to check, on-chain,
+            that the Agent ID belongs to your connected wallet.</li>
+          <li><strong>Enter the numeric answer</strong>, review the exact transaction, and confirm it
+            in your own wallet.</li>
+        </ol>
+        <div class="field">
+          <label for="handleInput">Your Agent ID handle</label>
+          <input id="handleInput" type="text" placeholder="e.g. egwu" autocomplete="off" spellcheck="false">
+          <button id="verifyHandleBtn" class="btn btn-secondary" type="button">Verify my Agent ID</button>
+          <p id="handleStatus" class="status" role="status"></p>
+        </div>
+        <div class="field">
+          <label for="answerInput">Your answer (a single number)</label>
+          <input id="answerInput" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 42" disabled>
+        </div>
+        <div id="txPreview" class="tx-preview" hidden>
+          <h4>Transaction preview — review before you confirm</h4>
+          <dl>
+            <dt>Contract</dt><dd><code id="txContract"></code></dd>
+            <dt>Function</dt><dd><code id="txFunction"></code></dd>
+            <dt>Round</dt><dd id="txRound"></dd>
+            <dt>Agent ID</dt><dd><code id="txAgentId"></code></dd>
+            <dt>Answer</dt><dd id="txAnswer"></dd>
+            <dt>Value</dt><dd>0 BNB</dd>
+            <dt>Gas estimate</dt><dd id="txGas"></dd>
+          </dl>
+          <p class="muted">Value is always 0. No token approvals are ever requested.
+          You confirm this transaction yourself in your own wallet — nothing is signed for you.</p>
+        </div>
+        <button id="previewBtn" class="btn btn-secondary" type="button" disabled>Preview transaction</button>
+        <button id="solveBtn" class="btn btn-primary" type="button" disabled>Solve and mint</button>
+        <p id="solveStatus" class="status" role="status"></p>
+        <div id="mintResult" class="mint-result" hidden>
+          <h4>🎉 Solved!</h4>
+          <p>Your Solve NFT token ID is <strong id="mintTokenId"></strong>.</p>
+          <p><a id="shareXBtn" class="btn btn-secondary" href="#" target="_blank" rel="noopener">Share on X</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how" class="section section-alt">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <ol class="how-list">
+        <li><strong>Hold an Agent ID.</strong> Agent ID is claimed inside the Binance App
+          (Wallet &gt; homepage banner &gt; Agent ID). One Agent ID per person.</li>
+        <li><strong>Read the puzzle.</strong> A new round opens every 12 hours and runs for 12 hours.
+          The answer is always a single number.</li>
+        <li><strong>Prove it is yours.</strong> Type your own handle once. The site computes
+          your Agent ID from it and checks on-chain that it belongs to your connected wallet —
+          before the solve button is enabled.</li>
+        <li><strong>Solve on-chain.</strong> Your answer is checked against the round's answer hash
+          in the contract. A correct answer mints a free Solve NFT to your wallet.
+          Free to play — you only pay network gas.</li>
+        <li><strong>Build a streak.</strong> Solve on consecutive UTC days and your streak grows.
+          Streaks belong to your Agent ID, not to any one wallet.</li>
+      </ol>
+      <p>One entry per Agent ID per round, enforced by the contract. The Solve NFT is a
+      collectible with no monetary value, and no prizes or returns are promised.</p>
+    </div>
+  </section>
+
+  <!-- Leaderboard -->
+  <section id="leaderboard" class="section">
+    <div class="wrap">
+      <h2>Leaderboard</h2>
+      <p class="muted">From on-chain <code>Solved</code> events. Agent IDs are shown truncated —
+      never as handles and never as wallet addresses.</p>
+      <div id="leaderboardBox">
+        <p class="muted">Loading leaderboard…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Past rounds -->
+  <section id="past" class="section section-alt">
+    <div class="wrap">
+      <h2>Past Rounds</h2>
+      <div id="pastRounds">
+        <p class="muted">Loading rounds…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="wrap">
+      <h2>FAQ</h2>
+      <dl class="faq">
+        <dt>What does it cost to play?</dt>
+        <dd>Nothing but network gas. The Solve NFT itself is free — free to play, you only pay
+        network gas. The value sent with the transaction is always 0 BNB.</dd>
+        <dt>What is the Solve NFT worth?</dt>
+        <dd>It is a collectible with no monetary value. No prizes or returns are promised.</dd>
+        <dt>Do I need an Agent ID?</dt>
+        <dd>Yes. Only Agent ID holders can play. If your wallet holds no Agent ID, solving is
+        disabled and the site tells you how to claim one in the Binance App
+        (Wallet &gt; homepage banner &gt; Agent ID).</dd>
+        <dt>Why do I type my handle?</dt>
+        <dd>Your Agent ID is derived from your handle on-chain. The site computes it in your
+        browser and verifies on-chain that it belongs to your connected wallet. Only your own
+        handle is ever entered or shown — the site never looks up other people's handles.</dd>
+        <dt>Can I solve a round twice?</dt>
+        <dd>No. One entry per Agent ID per round, enforced by the contract.</dd>
+        <dt>What happens if my answer is wrong?</dt>
+        <dd>The transaction reverts and nothing is minted. You only pay gas for the attempt,
+        so check the puzzle and your answer before confirming.</dd>
+        <dt>What can the contract owner do?</dt>
+        <dd>Only two things: schedule a new puzzle round (<code>createRound</code> — answer hash
+        plus time window) and transfer or renounce ownership (standard Ownable). There is no
+        withdraw function, no pause, no freeze, no token seizure, no fee, and no payable
+        entry point. The contract cannot move your funds.</dd>
+        <dt>Which wallet do I use?</dt>
+        <dd>Your own injected wallet — Binance Wallet or MetaMask — on BNB Smart Chain
+        (chain ID 56). There is no QR code login, no server session, and no backend.
+        You see and confirm every transaction yourself in your own wallet.</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Puzzle Arena is an independent hackathon entry. Not affiliated with Binance.</p>
+    <p class="muted">Contract: <code>0x2ac941b05042599edcc96cb7a3b4937102290ca7</code> on BNB Smart Chain — source verified on BscScan.</p>
+    <p class="muted">Contract owner powers: <code>createRound</code> only, plus standard
+    <code>transferOwnership</code> / <code>renounceOwnership</code>. No withdraw, no pause,
+    no freeze, no fees. Source code is open-source.</p>
+    <p class="muted">The Solve NFT is a collectible with no monetary value. No prizes or returns are promised.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
